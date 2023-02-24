@@ -561,10 +561,19 @@ float* film_grain_rendering_pixel_wise_cuda(const float *src_im, int widthIn, in
 	//printf( "elapsed time : %2.3f\n", elapsedTime);
     CUDA_CALL( cudaEventDestroy( start ) );
     CUDA_CALL( cudaEventDestroy( stop ) );
-    
+
+    /*Data transfer time*/
+    CUDA_CALL( cudaEventCreate( &start ) );
+    CUDA_CALL( cudaEventCreate( &stop ) );
+    CUDA_CALL( cudaEventRecord( start, 0 ) );
     /* copy output image */
     CUDA_CALL( cudaMemcpy( out_im, dev_out_im, widthOut*heightOut*sizeof(float),
                               cudaMemcpyDeviceToHost ) );
+
+    CUDA_CALL( cudaEventRecord( stop, 0 ) );
+    CUDA_CALL( cudaEventSynchronize( stop ) );
+    CUDA_CALL( cudaEventElapsedTime( &elapsedTime, start, stop ) );
+    printf("Time to transfer from GPU to CPU data:  %3.1f ms\n", elapsedTime);
 
 	float* imgOut = (float *) calloc(widthOut*heightOut, sizeof(float));
 	memcpy(imgOut,out_im,widthOut*heightOut * sizeof(float));

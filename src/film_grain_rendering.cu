@@ -442,21 +442,21 @@ float* film_grain_rendering_pixel_wise_cuda(const float *src_im, int widthIn, in
 {
 
     //display the parameters
-    std::cout<< "image size : " << widthIn << " x " << heightIn << std::endl;
-    std::cout<< "------------------" << std::endl;
-    std::cout<< "muR : " << filmGrainOptions.muR << std::endl;
-    std::cout<< "sigmaR : " << filmGrainOptions.sigmaR << std::endl;
-    std::cout<< "zoom, s : " << filmGrainOptions.s << std::endl;
-    std::cout<< "sigmaFilter : " <<  filmGrainOptions.sigmaFilter << std::endl;
-    std::cout<< "NmonteCarlo : " << filmGrainOptions.NmonteCarlo << std::endl;
-    std::cout<< "xA : " << filmGrainOptions.xA << std::endl;
-    std::cout<< "yA : " << filmGrainOptions.yA << std::endl;
-    std::cout<< "xB : " << filmGrainOptions.xB << std::endl;
-    std::cout<< "yB : " << filmGrainOptions.yB << std::endl;
-    std::cout<< "randomizeSeed : " << filmGrainOptions.randomizeSeed << std::endl;
-    std::cout<< "------------------" << std::endl;
-
-    printf("Output image size is %d x %d\n", widthOut, heightOut);
+//    std::cout<< "image size : " << widthIn << " x " << heightIn << std::endl;
+//    std::cout<< "------------------" << std::endl;
+//    std::cout<< "muR : " << filmGrainOptions.muR << std::endl;
+//    std::cout<< "sigmaR : " << filmGrainOptions.sigmaR << std::endl;
+//    std::cout<< "zoom, s : " << filmGrainOptions.s << std::endl;
+//    std::cout<< "sigmaFilter : " <<  filmGrainOptions.sigmaFilter << std::endl;
+//    std::cout<< "NmonteCarlo : " << filmGrainOptions.NmonteCarlo << std::endl;
+//    std::cout<< "xA : " << filmGrainOptions.xA << std::endl;
+//    std::cout<< "yA : " << filmGrainOptions.yA << std::endl;
+//    std::cout<< "xB : " << filmGrainOptions.xB << std::endl;
+//    std::cout<< "yB : " << filmGrainOptions.yB << std::endl;
+//    std::cout<< "randomizeSeed : " << filmGrainOptions.randomizeSeed << std::endl;
+//    std::cout<< "------------------" << std::endl;
+//
+//    printf("Output image size is %d x %d\n", widthOut, heightOut);
 
 
     /* copy src image on device */
@@ -523,9 +523,9 @@ float* film_grain_rendering_pixel_wise_cuda(const float *src_im, int widthIn, in
     int nbthreads = 28;
     dim3 blocks( (widthOut+nbthreads-1)/nbthreads, (heightOut+nbthreads-1)/nbthreads); //blocks(1,1);//;
     dim3 threads(nbthreads,nbthreads); //threads(1,1);//
-	printf("blocks.x : %d\n",blocks.x);
-	printf("blocks.y : %d\n",blocks.y);
-	printf("blocks.z : %d\n",blocks.z);    
+//	printf("blocks.x : %d\n",blocks.x);
+//	printf("blocks.y : %d\n",blocks.y);
+//	printf("blocks.z : %d\n",blocks.z);
 	/* start cuda event for computation time */
     cudaEvent_t     start, stop;
     CUDA_CALL( cudaEventCreate( &start ) );
@@ -557,7 +557,7 @@ float* film_grain_rendering_pixel_wise_cuda(const float *src_im, int widthIn, in
     CUDA_CALL( cudaEventSynchronize( stop ) );
     float   elapsedTime;
     CUDA_CALL( cudaEventElapsedTime( &elapsedTime, start, stop ) );
-    printf( "Time to generate:  %3.1f ms; Framerate: %3.2f images/sec\n", elapsedTime, 1000./elapsedTime );
+//    printf( "Time to generate:  %3.1f ms; Framerate: %3.2f images/sec\n", elapsedTime, 1000./elapsedTime );
 	//printf( "elapsed time : %2.3f\n", elapsedTime);
     CUDA_CALL( cudaEventDestroy( start ) );
     CUDA_CALL( cudaEventDestroy( stop ) );
@@ -573,7 +573,7 @@ float* film_grain_rendering_pixel_wise_cuda(const float *src_im, int widthIn, in
     CUDA_CALL( cudaEventRecord( stop, 0 ) );
     CUDA_CALL( cudaEventSynchronize( stop ) );
     CUDA_CALL( cudaEventElapsedTime( &elapsedTime, start, stop ) );
-    printf("Time to transfer from GPU to CPU data:  %3.1f ms\n", elapsedTime);
+//    printf("Time to transfer from GPU to CPU data:  %3.1f ms\n", elapsedTime);
 
 	float* imgOut = (float *) calloc(widthOut*heightOut, sizeof(float));
 	memcpy(imgOut,out_im,widthOut*heightOut * sizeof(float));

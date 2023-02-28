@@ -70,16 +70,16 @@ float* fg_render(float* pImg, int imgH, int imgW, int nC, float grainSize, int c
 
 
     //display parameters
-    std::cout << "Input image size : " << widthIn << " x " << heightIn << std::endl;
-    std::cout << "grainRadius : " << filmGrainParams.muR << std::endl;
-    std::cout << "sigmaR : " << filmGrainParams.sigmaR << std::endl;
-    std::cout << "sigmaFilter : " << filmGrainParams.sigmaFilter << std::endl;
-    std::cout << "NmonteCarlo : " << filmGrainParams.NmonteCarlo << std::endl;
-    if (colorActivated == 0)
-        std::cout << "black and white" << std::endl;
-    else
-        std::cout << "colour" << std::endl;
-    std::cout << "randomizeSeed : " << filmGrainParams.randomizeSeed << std::endl;
+//    std::cout << "Input image size : " << widthIn << " x " << heightIn << std::endl;
+//    std::cout << "grainRadius : " << filmGrainParams.muR << std::endl;
+//    std::cout << "sigmaR : " << filmGrainParams.sigmaR << std::endl;
+//    std::cout << "sigmaFilter : " << filmGrainParams.sigmaFilter << std::endl;
+//    std::cout << "NmonteCarlo : " << filmGrainParams.NmonteCarlo << std::endl;
+//    if (colorActivated == 0)
+//        std::cout << "black and white" << std::endl;
+//    else
+//        std::cout << "colour" << std::endl;
+//    std::cout << "randomizeSeed : " << filmGrainParams.randomizeSeed << std::endl;
 
 
     /**************************************************/
@@ -97,7 +97,7 @@ float* fg_render(float* pImg, int imgH, int imgW, int nC, float grainSize, int c
     //create pseudo-random number generator for the colour seeding
 
     //execute the film grain synthesis
-    std::cout << "***************************" << std::endl;
+//    std::cout << "***************************" << std::endl;
     for (unsigned int colourChannel = 0; colourChannel < ((unsigned int) MAX_CHANNELS); colourChannel++) {
         float *imgOutTemp;
         //copy memory
@@ -118,14 +118,11 @@ float* fg_render(float* pImg, int imgH, int imgW, int nC, float grainSize, int c
                                                           imgIn->get_ncols(), imgIn->get_nrows(), nOut, mOut,
                                                           filmGrainParams);
 
-        std::cout<<"BP 1"<<std::endl;
         //put the output image back to [0, 255]
         for (int i = 0; i < (mOut * nOut); i++)
             imgOutTemp[i] = imgOutTemp[i] * ((float) (MAX_GREY_LEVEL + EPSILON_GREY_LEVEL));
-        std::cout<<"BP 2"<<std::endl;
         if (colorActivated > 0)    //colour grain
         {
-            std::cout<<"BP 3"<<std::endl;
             for (unsigned int i = 0; i < (unsigned int) mOut; i++)
                 for (unsigned int j = 0; j < ((unsigned int) nOut); j++)
                     imgOut[j + i * (nOut) +
@@ -134,7 +131,6 @@ float* fg_render(float* pImg, int imgH, int imgW, int nC, float grainSize, int c
             delete imgOutTemp;
         } else    //black-and-white
         {
-            std::cout<<"BP 4"<<std::endl;
             for (unsigned int i = 0; i < (unsigned int) mOut; i++)
                 for (unsigned int j = 0; j < (unsigned int) nOut; j++) {
                     imgOut[j + i * (nOut)] =
@@ -148,7 +144,6 @@ float* fg_render(float* pImg, int imgH, int imgW, int nC, float grainSize, int c
             break;
         }
     }
-    std::cout<<"BP 5"<<std::endl;
 //    write_output_image(imgOut, fileNameOut, filmGrainParams, (unsigned int) MAX_CHANNELS);
 
 //    delete imgInFloat;
@@ -158,8 +153,8 @@ float* fg_render(float* pImg, int imgH, int imgW, int nC, float grainSize, int c
     gettimeofday(&end, NULL);
     double elapsedTime = (end.tv_sec - start.tv_sec) +
                          (end.tv_usec - start.tv_usec) / 1.e6;
-    std::cout << "time elapsed : " << elapsedTime << std::endl;
-    std::cout << "***************************" << std::endl << std::endl << std::endl;
+//    std::cout << "time elapsed : " << elapsedTime << std::endl;
+//    std::cout << "***************************" << std::endl << std::endl << std::endl;
 
 
     return imgOut;
